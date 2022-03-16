@@ -8,3 +8,18 @@ function computerPlay (){
         return "Scissors";
     }
 }
+let computerSelection = computerPlay();
+
+let playerSelection = prompt("Make your choice");
+
+function playRound(playerSelection, computerSelection){
+    if(playerSelection == computerSelection) {
+        return `It's a draw! You both chose ${playerSelection}.`;
+    }else if(playerSelection == "Rock" && computerSelection != "Paper" || playerSelection == "Paper" && computerSelection != "Scissors" || playerSelection == "Scissors" && computerSelection != "Rock") {
+        return `You win! ${playerSelection} beats ${computerSelection}`
+    }else {
+        return `You lose! ${computerSelection} beats ${playerSelection}`
+    }
+}
+
+console.log(playRound(playerSelection, computerSelection));
