@@ -8,40 +8,62 @@ function computerPlay (){
         return "scissors";
     }
 }
- let computerSelection = computerPlay();
+let computerSelection = "";
 
-
+let playerSelection = "";
+const results = document.querySelector('div');
+const score = document.querySelector('p');
 
 let playerScore = 0;
 
 let computerScore = 0;
 
-function playRound(playerSelection, computerSelection){
-    if(playerSelection.toLowerCase() == computerSelection) {
-        return `It's a draw! You both chose ${playerSelection}.`;
-    }else if(playerSelection.toLowerCase() == "rock" && computerSelection != "paper" || playerSelection.toLowerCase() == "paper" && computerSelection != "scissors" || playerSelection.toLowerCase() == "scissors" && computerSelection != "rock") {
-        playerScore++;
-        return `You win! ${playerSelection} beats ${computerSelection}` 
-    }else {
-        computerScore++;
-        return `You lose! ${computerSelection} beats ${playerSelection}`
-    }
-}
 
 
-function game() {
-    for (let i = 0; i < 5; i++) {
-        let playerSelection = (prompt("Make your choice"));
-        console.log(playRound(playerSelection, computerSelection));
-        console.log(`The score is ${playerScore} : ${computerScore}`);
-    };
-    if(playerScore == computerScore){
-        console.log(`It's a draw! You both won ${playerScore} games.`);
-    }else if(playerScore > computerScore) {
-        console.log(`Congrats! You won with a score of ${playerScore} : ${computerScore}`);
-    }else {
-        console.log(`You lose! The final score is ${playerScore} : ${computerScore}.`);
-    };
+
+const buttons = document.querySelectorAll('button');
+
+    buttons.forEach((button) => {
+
+        button.addEventListener('click', () => {
+            button.classList.add('pressed');
+            setTimeout(() => {
+                button.classList.remove('pressed');
+            }, 100);
+            playerSelection = button.value;
+            computerSelection = computerPlay();
+            results.textContent = (playRound(playerSelection, computerSelection));
+            if(playerScore >= 5 || computerScore >= 5) {
+                if(playerScore == computerScore){
+                    alert (`It's a draw! You both won ${playerScore} games.`);
+                }else if(playerScore > computerScore) {
+                    alert(`Congrats! You won with a score of ${playerScore} : ${computerScore}`);
+                }else {
+                    alert(`You lose! The final score is ${playerScore} : ${computerScore}.`);
+                };
+            };
+        });
+    });
     
-}
-game();
+
+    function playRound(playerSelection, computerSelection){
+        
+        if(playerSelection == computerSelection) {
+            score.textContent = `The score is ${playerScore} : ${computerScore}`;
+            return `It's a draw! You both chose ${playerSelection}.`;
+        }else if(playerSelection == "rock" &&               computerSelection != "paper" || playerSelection == "paper" && computerSelection != "scissors" || playerSelection == "scissors" && computerSelection != "rock") {
+            playerScore++;
+            score.textContent = `The score is ${playerScore} : ${computerScore}`;
+            return `You win! ${playerSelection} beats ${computerSelection}` 
+        }else {
+            computerScore++;
+            score.textContent = `The score is ${playerScore} : ${computerScore}`;
+            return `You lose! ${computerSelection} beats ${playerSelection}`
+        };   
+    };
+
+    
+
+ 
+
+   
